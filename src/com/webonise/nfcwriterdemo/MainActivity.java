@@ -125,9 +125,9 @@ public class MainActivity extends Activity {
 			Ndef ndef = Ndef.get(tag);
 			if (ndef != null) {
 				ndef.connect();
-				
-			/*	check if the tag can be made readOnly or not.*/
-				Log.v(TAG,ndef.canMakeReadOnly()+"");
+
+				/* check if the tag can be made readOnly or not. */
+				Log.v(TAG, ndef.canMakeReadOnly() + "");
 
 				if (!ndef.isWritable()) {
 					return new WriteResponse(0, "Tag is read-only");
@@ -233,17 +233,26 @@ public class MainActivity extends Activity {
 
 	private NdefMessage getTagAsNdef() {
 		boolean addAAR = false;
-		String uniqueId = "Hello Write";
+		String uniqueId = "Hello Tag";
 		byte[] uriField = uniqueId.getBytes(Charset.forName("US-ASCII"));
-		byte[] payload = new byte[uriField.length + 1]; // add 1 for the URI
+		byte[] payload = new byte[uriField.length + 1];// add 1 for the URI
 														// Prefix
+		/*
+		 * If you want to launch any particular application or want to launch
+		 * your own application among many other appliction in the mobile once
+		 * you swip over the NFC tag then use these lines.
+		 */
+		String domain = "com.webonise.nfcwriterdemo";
+		String type = "externalType";
+
 		payload[0] = 0x01; // prefixes http://www. to the URI
 
-		System.arraycopy(uriField, 0, payload, 1, uriField.length); // appends
-																	// URI to
-																	// payload
-		NdefRecord rtdUriRecord = new NdefRecord(NdefRecord.TNF_WELL_KNOWN,
-				NdefRecord.RTD_URI, new byte[0], payload);
+		System.arraycopy(uriField, 0, payload, 1, uriField.length);
+		NdefRecord rtdUriRecord = NdefRecord.createExternal(domain, type,
+				payload);
+
+		// NdefRecord rtdUriRecord = new NdefRecord(NdefRecord.TNF_WELL_KNOWN,
+		// NdefRecord.RTD_URI, new byte[0], payload);
 
 		if (addAAR) {
 			// note: returns AAR for different app (nfcreadtag)

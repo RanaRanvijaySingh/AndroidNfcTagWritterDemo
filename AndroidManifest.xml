@@ -34,7 +34,19 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
 
-                <data android:mimeType="text/plain" />
+                <!--
+					If you want to launch any particular application or want 
+					to launch your own application among many other appliction in
+ 					the mobile once you swip over the NFC tag then use these commands.
+                -->
+                <data
+                    android:host="ext"
+                    android:pathPrefix="/com.webonise.nfcwriterdemo:externaltype"
+                    android:scheme="vnd.android.nfc" />
+
+                <!-- If you want to write just a plain text to the NFC tag then use these lines -->
+                <!-- <data android:mimeType="text/plain" /> -->
+
             </intent-filter>
         </activity>
     </application>
