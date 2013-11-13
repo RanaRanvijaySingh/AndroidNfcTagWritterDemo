@@ -15,7 +15,7 @@ NDEFMessage - NFC Data Exchange Format is a light weight binary format used to e
 ####In order to make the tag read just your application and not to prompt list of other NFC enabled applicaiton you need to make changes at just two places .
 #####1) Manifest file.
 #####2) MainActivity Class.
-#####The changes that need to be added are written the **bold** letters and the lines that need to be changed are in *italic*.
+#####The changes that need to be added are marked with  "**" and the lines that need to be changed are in "*".
 ____________________________________________________________________________________________________________________________________________________________
 After this there are few steps that you need to follow:<br/><br/>
 
@@ -48,7 +48,20 @@ Step 1: Give the NFC permission in the manifest file .
 
                 <category android:name="android.intent.category.DEFAULT" />
 
-                *<data android:mimeType="text/plain" />*
+              <!--
+			If you want to launch any particular application or want 
+			to launch your own application among many other appliction in
+			the mobile once you swip over the NFC tag then use these commands.
+                -->
+              **  <data
+                    android:host="ext"
+                    android:pathPrefix="/com.webonise.nfcwriterdemo:externaltype"
+                    android:scheme="vnd.android.nfc" /> **
+
+                <!-- If you want to write just a plain text to the NFC tag then use these lines -->
+
+                * <data android:mimeType="text/plain" /> *
+
             </intent-filter>
         </activity>
     </application>
@@ -67,7 +80,8 @@ Step 2: Create the layout .
 ____________________________________________________________________________________________________________________________________________________________
 Step 3: Create class to initialize and handle the NFC objects .
 
-public class MainActivity extends Activity {
+
+		public class MainActivity extends Activity {
 	...
 
 	@Override
@@ -280,14 +294,21 @@ But if it not then give the user option to use the settings to enable the NFC ta
 		byte[] uriField = uniqueId.getBytes(Charset.forName("US-ASCII"));
 		byte[] payload = new byte[uriField.length + 1]; // add 1 for the URI
 														// Prefix
+		/*
+		 * If you want to launch any particular application or want to launch
+		 * your own application among many other appliction in the mobile once
+		 * you swip over the NFC tag then use these lines.
+		 */
+		**String domain = "com.webonise.nfcwriterdemo";**
+		**String type = "externalType";**
+
 		payload[0] = 0x01; // prefixes http://www. to the URI
 
-		System.arraycopy(uriField, 0, payload, 1, uriField.length); // appends
-																	// URI to
-																	// payload
-		NdefRecord rtdUriRecord = new NdefRecord(NdefRecord.TNF_WELL_KNOWN,
-				NdefRecord.RTD_URI, new byte[0], payload);
+		**System.arraycopy(uriField, 0, payload, 1, uriField.length);**
+		**NdefRecord rtdUriRecord = NdefRecord.createExternal(domain, type,payload);**
 
+		* NdefRecord rtdUriRecord = new NdefRecord(NdefRecord.TNF_WELL_KNOWN, NdefRecord.RTD_URI, new byte[0], payload);*
+		
 		if (addAAR) {
 			// note: returns AAR for different app (nfcreadtag)
 			return new NdefMessage(
