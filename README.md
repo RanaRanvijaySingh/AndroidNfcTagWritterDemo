@@ -1,6 +1,6 @@
 AndroidNfcTagWritterDemo
 ========================
-This application shows how to read a nfc tag in your application.<br/>
+This application shows how to write in a nfc tag.<br/>
 There are few new terms that you need to know before you start coding. Few of them are :<br/>
 <br/><br/>
 NfcAdapter - extending from the object class uses helper getDefaultAdapter(Context) to get the default NFC adapter.
