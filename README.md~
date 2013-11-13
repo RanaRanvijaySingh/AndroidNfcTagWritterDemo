@@ -305,8 +305,7 @@ But if it not then give the user option to use the settings to enable the NFC ta
 		payload[0] = 0x01; // prefixes http://www. to the URI
 
 		**System.arraycopy(uriField, 0, payload, 1, uriField.length);**
-		**NdefRecord rtdUriRecord = NdefRecord.createExternal(domain, type,
-				payload);**
+		**NdefRecord rtdUriRecord = NdefRecord.createExternal(domain, type,payload);**
 
 		* NdefRecord rtdUriRecord = new NdefRecord(NdefRecord.TNF_WELL_KNOWN, NdefRecord.RTD_URI, new byte[0], payload);*
 		
