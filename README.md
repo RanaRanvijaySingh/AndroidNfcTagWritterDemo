@@ -16,6 +16,12 @@ NDEFMessage - NFC Data Exchange Format is a light weight binary format used to e
 #####1) Manifest file (inside the intnet-filter tag).
 #####2) MainActivity Class (in getTagAsNdef()).
 #####The changes that need to be added are marked with  "**" and the lines that need to be changed are in "*".
+####A word of caution while making changes in the mainfest file .
+	In data tag the attribute value in 
+	`android:pathPrefix`, 
+		---`"/com.webonise.nfcwriterdemo:externaltype"` : should be in `lowercase` (for android version JellyBean and above).
+		whereas
+		---`"/com.webonise.nfcwriterdemo:externalType"` : should have `matching letters` (for android version below JellyBean). 
 ____________________________________________________________________________________________________________________________________________________________
 After this there are few steps that you need to follow:<br/><br/>
 
@@ -52,6 +58,13 @@ Step 1: Give the NFC permission in the manifest file .
 			If you want to launch any particular application or want 
 			to launch your own application among many other appliction in
 			the mobile once you swip over the NFC tag then use these commands.
+
+			In data tag the attribute value in 
+			android:pathPrefix, 
+			---"/com.webonise.nfcwriterdemo:externaltype" : should be in lowercase (for android version JellyBean and above).
+			whereas
+			---"/com.webonise.nfcwriterdemo:externalType" : should have matching letters (for android version below JellyBean). 
+			
                 -->
               **  <data
                     android:host="ext"
