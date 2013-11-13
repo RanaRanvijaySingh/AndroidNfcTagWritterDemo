@@ -20,9 +20,12 @@ NDEFMessage - NFC Data Exchange Format is a light weight binary format used to e
 	
 
 In data tag the attribute value in 
+
 	`android:pathPrefix`, 
 	---`"/com.webonise.nfcwriterdemo:externaltype"` : should be in `lowercase` (for android version JellyBean and above).
-	whereas
+	
+whereas
+	
 	---`"/com.webonise.nfcwriterdemo:externalType"` : should have `matching letters` (for android version below JellyBean). 
 ____________________________________________________________________________________________________________________________________________________________
 After this there are few steps that you need to follow:<br/><br/>
